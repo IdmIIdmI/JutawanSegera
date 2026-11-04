@@ -1,0 +1,253 @@
+
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Peti RM1 Juta</title>
+
+<style>
+body {
+  margin: 0;
+  background: radial-gradient(#263b60, #080e20);
+  color: white;
+  font-family: Arial, sans-serif;
+  text-align: center;
+  overflow: hidden;
+}
+
+h1 {
+  margin-top: 35px;
+  color: gold;
+  font-size: 32px;
+}
+
+#money {
+  font-size: 25px;
+  color: #ffe45c;
+  font-weight: bold;
+  margin: 20px;
+}
+
+#chest {
+  font-size: 130px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  margin-top: 40px;
+  transition: transform .15s;
+  touch-action: manipulation;
+}
+
+#chest:active {
+  transform: scale(.85);
+}
+
+#instruction {
+  font-size: 19px;
+  margin: 20px;
+}
+
+#count {
+  font-size: 28px;
+  color: #00ffad;
+  font-weight: bold;
+}
+
+#result {
+  font-size: 27px;
+  color: gold;
+  font-weight: bold;
+}
+
+.coin {
+  position: fixed;
+  top: 45%;
+  left: 50%;
+  font-size: 35px;
+  pointer-events: none;
+  animation: explode 2s ease-out forwards;
+}
+
+@keyframes explode {
+  to {
+    transform: translate(var(--x), var(--y)) rotate(900deg);
+    opacity: 0;
+  }
+}
+
+.broken {
+  animation: shake .4s, fade .8s forwards;
+}
+
+@keyframes shake {
+  0%,100% {transform: translateX(0)}
+  25% {transform: translateX(-20px)}
+  50% {transform: translateX(20px)}
+  75% {transform: translateX(-15px)}
+}
+
+@keyframes fade {
+  to {opacity: 0; transform: scale(1.8)}
+}
+
+#reset {
+  padding: 14px 25px;
+  border: none;
+  border-radius: 12px;
+  background: gold;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 25px;
+}
+</style>
+</head>
+
+<body>
+
+<h1>💰 PETI RM1 JUTA 💰</h1>
+
+<div id="money">HADIAH: RM1,000,000</div>
+
+<div id="instruction">
+Tekan peti dan sebut<br>
+<strong>SUBHANALLAH</strong> 3 kali!
+</div>
+
+<button id="chest" onclick="startGame()">🧰</button>
+
+<div id="count">0 / 3</div>
+<p id="status">Tekan peti untuk bermula!</p>
+<div id="result"></div>
+
+<button id="reset" onclick="location.reload()">
+MAIN SEMULA
+</button>
+
+<script>
+const SpeechRecognition =
+  window.SpeechRecognition ||
+  window.webkitSpeechRecognition;
+
+let recognition;
+let count = 0;
+let started = false;
+let finished = false;
+
+function startGame() {
+  if (started || finished) return;
+
+  if (!SpeechRecognition) {
+    document.getElementById("status").innerText =
+      "Browser anda tidak menyokong pengecaman suara. Cuba Chrome.";
+    return;
+  }
+
+  started = true;
+
+  document.getElementById("status").innerText =
+    "🎤 Sebut SUBHANALLAH 3 kali!";
+
+  recognition = new SpeechRecognition();
+  recognition.lang = "ms-MY";
+  recognition.continuous = true;
+  recognition.interimResults = false;
+
+  recognition.onresult = function(event) {
+    for (let i = event.resultIndex; i < event.results.length; i++) {
+      if (event.results[i].isFinal) {
+        let words = event.results[i][0].transcript.toLowerCase();
+
+        let matches = words.match(/subhanallah/g);
+
+        if (matches) {
+          for (let j = 0; j < matches.length; j++) {
+            if (count < 3) {
+              count++;
+              document.getElementById("count").innerText =
+                count + " / 3";
+
+              document.getElementById("chest").style.transform =
+                "scale(1.15)";
+
+              setTimeout(() => {
+                document.getElementById("chest").style.transform =
+                  "scale(1)";
+              }, 150);
+            }
+          }
+        }
+
+        if (count >= 3) {
+          win();
+          return;
+        }
+      }
+    }
+  };
+
+  recognition.onerror = function(event) {
+    document.getElementById("status").innerText =
+      "Ralat mikrofon: " + event.error +
+      ". Cuba benarkan akses mikrofon.";
+  };
+
+  recognition.onend = function() {
+    if (started && !finished) {
+      try {
+        recognition.start();
+      } catch(e) {}
+    }
+  };
+
+  try {
+    recognition.start();
+  } catch(e) {
+    document.getElementById("status").innerText =
+      "Sila cuba tekan peti sekali lagi.";
+    started = false;
+  }
+}
+
+function win() {
+  finished = true;
+  started = false;
+
+  if (recognition) {
+    recognition.onend = null;
+    recognition.stop();
+  }
+
+  const chest = document.getElementById("chest");
+
+  chest.innerText = "💥";
+  chest.classList.add("broken");
+
+  document.getElementById("status").innerText =
+    "ALHAMDULILLAH! PETI BERJAYA DIBUKA!";
+
+  document.getElementById("result").innerHTML =
+    "🎉 TAHNIAH! 🎉<br>ANDA MENANG<br>RM1,000,000!";
+
+  // Duit meletup keluar
+  for (let i = 0; i < 100; i++) {
+    let coin = document.createElement("div");
+    coin.className = "coin";
+    coin.innerText = Math.random() > .5 ? "💵" : "💰";
+
+    coin.style.setProperty("--x",
+      (Math.random() - .5) * 1000 + "px");
+
+    coin.style.setProperty("--y",
+      (Math.random() - .5) * 1000 + "px");
+
+    document.body.appendChild(coin);
+
+    setTimeout(() => coin.remove(), 2500);
+  }
+}
+</script>
+
+</body>
+</html>
