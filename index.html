@@ -3,112 +3,309 @@
 <html lang="ms">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Peti RM1 Juta</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Pengembaraan 5 Peti Harta Karun</title>
 <style>
 *{box-sizing:border-box}
 body{
- margin:0;min-height:100vh;
- background:radial-gradient(circle,#29456d,#080d1c);
- color:white;font-family:Arial,sans-serif;
- text-align:center;overflow:hidden;
+ margin:0;min-height:100vh;color:white;
+ font-family:Arial,sans-serif;text-align:center;
+ background:radial-gradient(ellipse at top,#354b65,#111b2b 65%,#080d16);
+ overflow-x:hidden;
 }
-h1{
- color:gold;margin-top:30px;font-size:30px;
- text-shadow:0 0 15px gold;
+header{padding:20px 10px 5px}
+h1{color:#ffd76b;font-size:25px;text-shadow:0 0 15px gold}
+.sub{color:#d6e1ef;font-size:13px}
+.panel{
+ margin:15px auto;padding:12px;
+ width:92%;max-width:460px;
+ background:#ffffff12;border:1px solid #ffffff30;
+ border-radius:15px;
 }
-.subtitle{color:#fff1b0;font-size:20px}
-#instruction{font-size:18px;margin-top:35px}
+#stage{color:#ffdc7a;font-weight:bold;font-size:20px}
 #chest{
- display:block;margin:35px auto 20px;
- background:none;border:0;font-size:140px;
+ font-size:125px;border:0;background:none;
+ display:block;margin:15px auto;
  cursor:pointer;touch-action:none;
  user-select:none;-webkit-user-select:none;
- filter:drop-shadow(0 0 15px gold);
+ filter:drop-shadow(0 0 18px #e9ad43);
 }
-#count{font-size:38px;color:#00ffae;font-weight:bold}
-#status{font-size:18px;min-height:50px;padding:12px}
-#result{
- display:none;position:relative;z-index:10;
- margin:25px auto;padding:15px;
- color:gold;font-size:29px;font-weight:bold;
- line-height:1.5;text-shadow:0 0 15px orange;
- animation:appear 1s ease;
+#chest:active{transform:scale(.92)}
+#goal{font-size:19px;color:#ffe7a4;font-weight:bold}
+#counter{font-size:30px;color:#7dffc0;font-weight:bold;margin:12px}
+#status{font-size:15px;min-height:45px;padding:8px;color:#e6efff}
+#inventory{
+ display:flex;justify-content:center;gap:9px;
+ flex-wrap:wrap;font-size:12px;
 }
-.money{
+.item{
+ background:#ffffff15;border:1px solid #ffffff35;
+ padding:9px;border-radius:10px;
+ min-width:75px;
+}
+.item span{display:block;font-size:24px;margin-bottom:4px}
+#reward{
+ display:none;position:relative;z-index:5;
+ margin:20px auto;padding:20px;
+ color:#ffe37b;font-size:22px;
+ line-height:1.5;font-weight:bold;
+}
+#next{
+ display:none;padding:14px 26px;
+ background:linear-gradient(90deg,#ffd34d,#fff0a4);
+ border:0;border-radius:30px;
+ font-weight:bold;font-size:17px;
+ margin:10px;cursor:pointer;
+}
+#restart{
+ display:none;padding:12px 20px;
+ border:1px solid gold;border-radius:20px;
+ color:white;background:#ffffff15;
+ margin:10px;
+}
+.coin{
+ position:fixed;top:-40px;
+ font-size:27px;z-index:10;
+ pointer-events:none;
+ animation:rain var(--duration) linear forwards;
+}
+@keyframes rain{
+ to{transform:translate(var(--side),110vh) rotate(900deg);opacity:.2}
+}
+.spark{
  position:fixed;top:45%;left:50%;
- font-size:35px;pointer-events:none;z-index:5;
- animation:fly 2.8s ease-out forwards;
+ font-size:35px;z-index:8;
+ pointer-events:none;
+ animation:burst 2s ease-out forwards;
 }
-@keyframes fly{
- to{
-  transform:translate(var(--x),var(--y))
-  rotate(900deg) scale(1.5);opacity:0;
- }
+@keyframes burst{
+ to{transform:translate(var(--x),var(--y)) rotate(700deg) scale(1.5);opacity:0}
 }
 @keyframes shake{
  0%,100%{transform:translateX(0)}
- 25%{transform:translateX(-25px)}
- 50%{transform:translateX(25px)}
- 75%{transform:translateX(-15px)}
+ 25%{transform:translateX(-18px)}
+ 50%{transform:translateX(18px)}
+ 75%{transform:translateX(-12px)}
 }
-@keyframes appear{
- from{opacity:0;transform:scale(.3)}
- to{opacity:1;transform:scale(1)}
+@keyframes glow{
+ 50%{filter:drop-shadow(0 0 35px gold) brightness(1.7)}
 }
-#reset{
- display:none;background:gold;color:#171000;
- border:0;border-radius:30px;padding:15px 30px;
- font-size:18px;font-weight:bold;margin:15px;
- cursor:pointer;
+#mic{
+ font-size:12px;color:#a8d9ff;margin:8px;
 }
+button:disabled{opacity:.5}
 </style>
 </head>
 <body>
 
-<h1>💰 PETI RM1 JUTA 💰</h1>
-<div class="subtitle">HADIAH RM1,000,000</div>
+<header>
+ <h1>🏆 PENGEMBARAAN HARTA KARUN 🏆</h1>
+ <div class="sub">LIMA PETI • LIMA GANJARAN • SATU PENGEMBARAAN</div>
+</header>
 
-<div id="instruction">
- <p>TEKAN DAN TAHAN PETI!</p>
- <p>Sambil sebut <b>SUBHANALLAH</b></p>
- <p>3 KALI UNTUK MEMECAHKANNYA!</p>
+<div class="panel">
+ <div id="stage">PERINGKAT 1 / 5</div>
+ <p id="description">Peti kayu purba</p>
+ <div id="chest">🪵</div>
+ <div id="goal">BISMILLAHIRRAHMANIRRAHIM</div>
+ <div id="counter">0 / 3</div>
+ <div id="status">Tekan dan tahan peti sambil menyebut zikir.</div>
+ <div id="mic">🎤 Mikrofon belum diaktifkan</div>
 </div>
 
-<button id="chest">🧰</button>
-<div id="count">0 / 3</div>
-<div id="status">Tekan dan tahan peti untuk bermula!</div>
-<div id="result"></div>
+<div class="panel">
+ <b>🎒 KOLEKSI GANJARAN</b>
+ <div id="inventory" style="margin-top:12px">
+  <div class="item"><span>🔒</span>Kunci perak</div>
+  <div class="item"><span>🔒</span>Kunci emas</div>
+  <div class="item"><span>🔒</span>Peta</div>
+  <div class="item"><span>🔒</span>Rantai</div>
+ </div>
+</div>
 
-<button id="reset" onclick="location.reload()">
- MAIN SEMULA 🔄
-</button>
+<div id="reward"></div>
+<button id="next">BUKA PERINGKAT SETERUSNYA ➜</button>
+<button id="restart" onclick="location.reload()">MAIN SEMULA 🔄</button>
 
 <script>
-const Speech =
- window.SpeechRecognition ||
- window.webkitSpeechRecognition;
+const Speech = window.SpeechRecognition ||
+               window.webkitSpeechRecognition;
 
 const chest=document.getElementById("chest");
-const counter=document.getElementById("count");
+const stageText=document.getElementById("stage");
+const description=document.getElementById("description");
+const goal=document.getElementById("goal");
+const counter=document.getElementById("counter");
 const statusBox=document.getElementById("status");
-const result=document.getElementById("result");
+const mic=document.getElementById("mic");
+const rewardBox=document.getElementById("reward");
+const nextButton=document.getElementById("next");
+const inventory=document.getElementById("inventory");
 
+let stage=0;
 let holding=false;
 let finished=false;
 let active=false;
-let count=0;
 let recognition=null;
-let lastInterim="";
+let resultSlots={};
+let counts={};
+let rewardReady=false;
 
-// SUARA PEMBUKAAN
-function startVoice(){
+const stages=[
+ {
+  name:"Peti kayu purba",
+  icon:"🪵",
+  phrases:["bismillah"],
+  required:[3],
+  goal:"BISMILLAHIRRAHMANIRRAHIM 3 KALI",
+  reward:"🔑",
+  rewardName:"KUNCI PERAK BERSINAR",
+  audio:"Tahniah! Anda mendapat kunci perak yang bersinar."
+ },
+ {
+  name:"Peti kayu moden",
+  icon:"🗝️",
+  phrases:["subhanallah"],
+  required:[3],
+  goal:"SUBHANALLAH 3 KALI",
+  reward:"🗝️",
+  rewardName:"KUNCI EMAS BERSINAR",
+  audio:"Hebat! Anda mendapat kunci emas yang bersinar."
+ },
+ {
+  name:"Peti besi buruk",
+  icon:"🧰",
+  phrases:["allahuakbar"],
+  required:[3],
+  goal:"ALLAHU AKBAR 3 KALI",
+  reward:"🗺️",
+  rewardName:"PETA HARTA KARUN EMAS",
+  audio:"Syabas! Kunci emas telah membuka peti besi. Anda menemui peta harta karun yang bersinar."
+ },
+ {
+  name:"Peti besi perak",
+  icon:"🛡️",
+  phrases:["subhanallah","allahuakbar","alhamdulillah"],
+  required:[1,1,1],
+  goal:"SUBHANALLAH 1X • ALLAHU AKBAR 1X • ALHAMDULILLAH 1X",
+  reward:"💎",
+  rewardName:"RANTAI BERLIAN WARNA-WARNI",
+  audio:"Tahniah! Anda mendapat rantai berlian warna-warni yang sangat indah."
+ },
+ {
+  name:"Peti besi emas",
+  icon:"👑",
+  phrases:["alhamdulillah"],
+  required:[3],
+  goal:"ALHAMDULILLAH 3 KALI",
+  reward:"🪙",
+  rewardName:"HUJAN SYILING EMAS",
+  audio:"Tahniah! Anda berjaya akhiri permainan ini. Tapi, sebanyak mana pun harta yang kamu miliki di dunia, akhirat itu lebih hebat dan lebih berharga."
+ }
+];
 
- if(!Speech){
-  statusBox.innerText="Browser tidak menyokong suara. Cuba Chrome.";
+const aliases={
+ bismillah:[
+  "bismillahirrahmanirrahim",
+  "bismillahirrohmanirrohim",
+  "bismillahirrahmanirrohim",
+  "bismillahirrohmanirrahim",
+  "bismillahirrahman",
+  "bismillah"
+ ],
+ subhanallah:[
+  "subhanallah","subahanallah","subhan allah"
+ ],
+ allahuakbar:[
+  "allahuakbar","allahu akbar","allah akbar",
+  "allahuakabr","allahu akabr"
+ ],
+ alhamdulillah:[
+  "alhamdulillah","alhamdulilah","alhamdulillah"
+ ]
+};
+
+function normalize(s){
+ return s.toLowerCase()
+ .normalize("NFD")
+ .replace(/[\u0300-\u036f]/g,"")
+ .replace(/[^a-z]/g,"");
+}
+
+function occurrences(text,phrase){
+ let n=0,pos=0;
+ while((pos=text.indexOf(phrase,pos))!==-1){
+  n++;pos+=phrase.length;
+ }
+ return n;
+}
+
+function findCount(text,key){
+ let total=0;
+ const normalized=normalize(text);
+ for(const alias of aliases[key]){
+  total=Math.max(total,occurrences(normalized,normalize(alias)));
+ }
+ return total;
+}
+
+function speak(text,callback){
+ if(!("speechSynthesis" in window)){
+  if(callback)callback();
   return;
  }
+ speechSynthesis.cancel();
 
+ const msg=new SpeechSynthesisUtterance(text);
+ msg.lang="ms-MY";
+ msg.rate=.9;
+ msg.pitch=1.05;
+ msg.volume=1;
+
+ const voices=speechSynthesis.getVoices();
+ const voice=voices.find(v=>v.lang.toLowerCase().startsWith("ms"));
+ if(voice)msg.voice=voice;
+
+ msg.onend=()=>{if(callback)callback()};
+ msg.onerror=()=>{if(callback)callback()};
+
+ speechSynthesis.speak(msg);
+}
+
+function render(){
+ const s=stages[stage];
+ stageText.innerText="PERINGKAT "+(stage+1)+" / 5";
+ description.innerText=s.name;
+ chest.innerText=s.icon;
+ chest.style.display="block";
+ chest.style.animation="";
+ goal.innerText=s.goal;
+ counter.innerText=s.required.length===1
+  ? "0 / "+s.required[0]
+  : s.required.map((v,i)=>"0 / "+v).join("   ");
+ statusBox.innerText="Tekan dan tahan peti sambil sebut zikir.";
+ mic.innerText="🎤 Sedia mengesan suara";
+ rewardBox.style.display="none";
+ nextButton.style.display="none";
+ rewardReady=false;
+ finished=false;
+ counts={};
+ resultSlots={};
+}
+
+function updateCounter(){
+ const s=stages[stage];
+ const display=s.phrases.map((p,i)=>
+  (counts[p]||0)+" / "+s.required[i]
+ );
+ counter.innerText=display.join("     ");
+}
+
+function beginVoice(){
+ if(!Speech){
+  mic.innerText="Browser tidak menyokong pengecaman suara. Cuba Chrome.";
+  return;
+ }
  if(active||finished)return;
 
  recognition=new Speech();
@@ -119,50 +316,62 @@ function startVoice(){
 
  recognition.onstart=()=>{
   active=true;
-  statusBox.innerText="🎤 MIKROFON AKTIF! SEBUT SEKARANG!";
+  mic.innerText="🎤 MIKROFON AKTIF";
  };
 
  recognition.onresult=(event)=>{
   if(!holding||finished)return;
 
   for(let i=event.resultIndex;i<event.results.length;i++){
+   const text=event.results[i][0].transcript;
 
-   const transcript=event.results[i][0].transcript
-    .toLowerCase().trim();
+   const s=stages[stage];
+   const slot=i;
+   const current={};
 
-   if(!event.results[i].isFinal){
-    if(transcript!==lastInterim){
-     lastInterim=transcript;
-     statusBox.innerText="🎤 Mendengar: "+transcript;
+   s.phrases.forEach((phrase,index)=>{
+    current[phrase]=Math.min(
+     s.required[index],
+     findCount(text,phrase)
+    );
+   });
+
+   const previous=resultSlots[slot]||{};
+
+   // Interim dan final tidak dikira dua kali
+   s.phrases.forEach((phrase,index)=>{
+    const old=previous[phrase]||0;
+    const now=current[phrase]||0;
+
+    if(now>old){
+     counts[phrase]=Math.min(
+      s.required[index],
+      (counts[phrase]||0)+(now-old)
+     );
     }
-    continue;
-   }
+   });
 
-   lastInterim="";
+   resultSlots[slot]=current;
+   updateCounter();
 
-   const matches=transcript.match(/subhanallah/g);
+   const done=s.phrases.every((p,i)=>
+    (counts[p]||0)>=s.required[i]
+   );
 
-   if(matches){
-    count=Math.min(3,count+matches.length);
-    counter.innerText=count+" / 3";
+   statusBox.innerText=done
+    ?"Hebat! Syarat dipenuhi!"
+    :"🎤 Suara dikesan! Teruskan...";
 
-    statusBox.innerText=
-     count===1?"Bagus! Kali pertama!":
-     count===2?"Teruskan! Kali kedua!":
-     "ALHAMDULILLAH! CUKUP 3 KALI!";
-
-    if(count>=3){
-     win();
-     return;
-    }
+   if(done){
+    completeStage();
+    return;
    }
   }
  };
 
  recognition.onerror=(event)=>{
   if(!finished){
-   statusBox.innerText="Mikrofon: "+event.error+
-   ". Sila semak kebenaran mikrofon.";
+   mic.innerText="Mikrofon: "+event.error;
   }
  };
 
@@ -173,126 +382,125 @@ function startVoice(){
   }
  };
 
- try{
-  recognition.start();
- }catch(e){
-  statusBox.innerText="Sila cuba tekan semula.";
- }
+ try{recognition.start()}
+ catch(e){mic.innerText="Tekan semula untuk cuba."}
 }
 
-// TEKAN DAN TAHAN PETI
-chest.addEventListener("pointerdown",(e)=>{
+chest.addEventListener("pointerdown",e=>{
  e.preventDefault();
- if(finished)return;
-
+ if(finished||rewardReady)return;
  holding=true;
  chest.setPointerCapture(e.pointerId);
- startVoice();
+ beginVoice();
 });
 
 function release(){
- if(!holding)return;
  holding=false;
-
- if(!finished){
-  statusBox.innerText="Jari dilepaskan. Tekan dan tahan semula!";
+ if(!finished&&!rewardReady){
+  statusBox.innerText="Jari dilepaskan. Sambung tekan dan tahan.";
  }
 }
 
 chest.addEventListener("pointerup",release);
 chest.addEventListener("pointercancel",release);
 
-// PETI PECAH
-function win(){
+function burst(symbol,number=65){
+ for(let i=0;i<number;i++){
+  const el=document.createElement("div");
+  el.className="spark";
+  el.innerText=symbol;
+  el.style.setProperty("--x",(Math.random()-.5)*900+"px");
+  el.style.setProperty("--y",(Math.random()-.5)*850+"px");
+  document.body.appendChild(el);
+  setTimeout(()=>el.remove(),2100);
+ }
+}
 
+function rainCoins(){
+ for(let i=0;i<110;i++){
+  setTimeout(()=>{
+   const el=document.createElement("div");
+   el.className="coin";
+   el.innerText=Math.random()>.5?"🪙":"💰";
+   el.style.left=Math.random()*100+"vw";
+   el.style.setProperty("--side",(Math.random()-.5)*160+"px");
+   el.style.setProperty("--duration",(2+Math.random()*3)+"s");
+   document.body.appendChild(el);
+   setTimeout(()=>el.remove(),5500);
+  },i*35);
+ }
+}
+
+function updateInventory(){
+ const items=[
+  ["🔑","Kunci perak"],
+  ["🗝️","Kunci emas"],
+  ["🗺️","Peta harta"],
+  ["💎","Rantai berlian"]
+ ];
+ inventory.innerHTML=items.map((item,i)=>
+  `<div class="item"><span>${i<stage?item[0]:"🔒"}</span>${item[1]}</div>`
+ ).join("");
+}
+
+function completeStage(){
  if(finished)return;
-
  finished=true;
  holding=false;
+ rewardReady=true;
 
  if(recognition){
   recognition.onend=null;
   recognition.stop();
  }
+ active=false;
 
- chest.innerText="💥";
  chest.style.animation="shake .5s";
+ chest.innerText="💥";
+ statusBox.innerText="PETI TERBUKA! GANJARAN DITEMUI!";
 
- statusBox.innerText="PETI PECAH!!!";
- document.getElementById("instruction").style.display="none";
+ const s=stages[stage];
 
- // LETUPAN DUIT
- for(let i=0;i<180;i++){
-  const money=document.createElement("div");
-  money.className="money";
-  money.innerText=Math.random()>.5?"💵":"💰";
-
-  money.style.setProperty("--x",
-   (Math.random()-.5)*1200+"px");
-
-  money.style.setProperty("--y",
-   (Math.random()-.5)*1100+"px");
-
-  document.body.appendChild(money);
-  setTimeout(()=>money.remove(),3000);
- }
-
- // ENDING BERSUARA
  setTimeout(()=>{
-  chest.style.display="none";
-  counter.style.display="none";
+  chest.style.animation="glow 1.2s infinite";
+  chest.innerText=s.reward;
+  burst(stage===4?"🪙":s.reward,stage===4?100:60);
 
-  result.style.display="block";
-
-  result.innerHTML=`
-   <div style="font-size:38px">
-    ALHAMDULILLAH!!
-   </div>
-   <div style="font-size:60px;margin:15px">
-    ❤️🤲❤️
-   </div>
-   <div style="font-size:35px">SYABAS!!</div>
-   <div style="font-size:28px;margin-top:25px">
-    3X SUBHANALLAH
-    <br><br>
-    LEBIH BERNILAI
-    <br><br>
-    DARI RM1 JUTA.
-   </div>
-   <div style="font-size:55px;margin-top:20px">
-    ✨🤲✨
-   </div>
+  rewardBox.style.display="block";
+  rewardBox.innerHTML=`
+   <div style="font-size:52px">${s.reward}</div>
+   <div>${s.rewardName}</div>
   `;
 
-  statusBox.innerText="";
-  document.getElementById("reset").style.display="inline-block";
-
-  // BACA MESEJ DENGAN SUARA
-  if("speechSynthesis" in window){
-
-   speechSynthesis.cancel();
-
-   const msg=new SpeechSynthesisUtterance(
-    "Alhamdulillah! Syabas! Tiga kali Subhanallah lebih bernilai dari satu juta ringgit!"
+  if(stage===4){
+   rainCoins();
+   document.getElementById("restart").style.display="inline-block";
+   statusBox.innerText="ANDA TELAH MENAMATKAN PERMAINAN!";
+   speak(
+    "Tahniah, anda berjaya akhiri permainan ini. Tapi, sebanyak mana pun harta yang kamu miliki di dunia, akhirat itu lebih hebat dan lebih berharga."
    );
-
-   msg.lang="ms-MY";
-   msg.rate=0.85;
-   msg.pitch=1.1;
-   msg.volume=1;
-
-   const voices=speechSynthesis.getVoices();
-
-   const malayVoice=voices.find(v=>
-    v.lang.toLowerCase().startsWith("ms")
-   );
-
-   if(malayVoice)msg.voice=malayVoice;
-
-   speechSynthesis.speak(msg);
+  }else{
+   updateInventory();
+   nextButton.style.display="inline-block";
+   statusBox.innerText="Ganjaran berjaya diperoleh!";
+   speak(s.audio);
   }
+ },900);
+}
 
- },3000);
+nextButton.addEventListener("click",()=>{
+ if(!rewardReady||stage>=4)return;
+
+ stage++;
+ render();
+ updateInventory();
+});
+
+render();
+updateInventory();
+
+if("speechSynthesis" in window){
+ speechSynthesis.getVoices();
 }
 </script>
 </body>
