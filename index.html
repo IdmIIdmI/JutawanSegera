@@ -3,99 +3,251 @@
 <html lang="ms">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
 <title>Pengembaraan 5 Peti Harta Karun</title>
+
 <style>
 *{box-sizing:border-box}
+
 body{
- margin:0;min-height:100vh;color:white;
- font-family:Arial,sans-serif;text-align:center;
- background:radial-gradient(ellipse at top,#354b65,#111b2b 65%,#080d16);
+ margin:0;
+ min-height:100vh;
+ min-height:100dvh;
+ padding:8px;
+ color:white;
+ font-family:Arial,sans-serif;
+ text-align:center;
+ background:radial-gradient(ellipse at top,#344b69,#101b2b 65%,#070c15);
  overflow-x:hidden;
 }
-header{padding:20px 10px 5px}
-h1{color:#ffd76b;font-size:25px;text-shadow:0 0 15px gold}
-.sub{color:#d6e1ef;font-size:13px}
+
+header{padding:3px 0}
+h1{
+ color:#ffd76b;
+ font-size:clamp(17px,5vw,25px);
+ margin:5px 0;
+ text-shadow:0 0 12px gold;
+}
+.sub{font-size:10px;color:#d5e2ef}
+
+.layout{
+ max-width:650px;
+ margin:auto;
+ display:grid;
+ grid-template-columns:1.2fr .8fr;
+ gap:8px;
+ align-items:stretch;
+}
+
 .panel{
- margin:15px auto;padding:12px;
- width:92%;max-width:460px;
- background:#ffffff12;border:1px solid #ffffff30;
- border-radius:15px;
+ background:#ffffff10;
+ border:1px solid #ffffff30;
+ border-radius:13px;
+ padding:9px 7px;
+ min-width:0;
 }
-#stage{color:#ffdc7a;font-weight:bold;font-size:20px}
+
+#stage{
+ color:#ffdc7a;
+ font-size:15px;
+ font-weight:bold;
+}
+
+#description{
+ font-size:12px;
+ margin:5px 0;
+ color:#dce9fa;
+}
+
 #chest{
- font-size:125px;border:0;background:none;
- display:block;margin:15px auto;
- cursor:pointer;touch-action:none;
- user-select:none;-webkit-user-select:none;
- filter:drop-shadow(0 0 18px #e9ad43);
+ display:block;
+ margin:5px auto;
+ width:100%;
+ height:105px;
+ border:0;
+ background:none;
+ font-size:76px;
+ cursor:pointer;
+ touch-action:none;
+ user-select:none;
+ -webkit-user-select:none;
+ filter:drop-shadow(0 0 12px #e9ad43);
 }
-#chest:active{transform:scale(.92)}
-#goal{font-size:19px;color:#ffe7a4;font-weight:bold}
-#counter{font-size:30px;color:#7dffc0;font-weight:bold;margin:12px}
-#status{font-size:15px;min-height:45px;padding:8px;color:#e6efff}
+
+#goal{
+ color:#ffe7a4;
+ font-size:12px;
+ font-weight:bold;
+ line-height:1.5;
+ min-height:34px;
+}
+
+#counter{
+ font-size:24px;
+ color:#7dffc0;
+ font-weight:bold;
+ margin:7px 0;
+}
+
+#status{
+ font-size:12px;
+ color:#e6efff;
+ min-height:33px;
+ line-height:1.4;
+ padding:4px;
+}
+
+#mic{
+ color:#a8d9ff;
+ font-size:10px;
+ margin:3px;
+}
+
+.inventory-title{
+ font-size:12px;
+ color:#ffdf8a;
+ font-weight:bold;
+ margin:3px 0 8px;
+}
+
 #inventory{
- display:flex;justify-content:center;gap:9px;
- flex-wrap:wrap;font-size:12px;
+ display:grid;
+ grid-template-columns:1fr 1fr;
+ gap:6px;
 }
+
 .item{
- background:#ffffff15;border:1px solid #ffffff35;
- padding:9px;border-radius:10px;
- min-width:75px;
+ background:#ffffff12;
+ border:1px solid #ffffff30;
+ padding:7px 3px;
+ border-radius:9px;
+ min-width:0;
+ font-size:10px;
+ color:#e5e9f0;
 }
-.item span{display:block;font-size:24px;margin-bottom:4px}
-#reward{
- display:none;position:relative;z-index:5;
- margin:20px auto;padding:20px;
- color:#ffe37b;font-size:22px;
- line-height:1.5;font-weight:bold;
+
+.item span{
+ display:block;
+ font-size:25px;
+ margin-bottom:4px;
 }
+
+.locked{opacity:.35;filter:grayscale(1)}
+
+.actions{
+ max-width:650px;
+ margin:9px auto;
+ display:grid;
+ grid-template-columns:1fr 1fr;
+ gap:8px;
+}
+
+.action{
+ min-height:37px;
+ border:0;
+ border-radius:9px;
+ padding:8px 4px;
+ font-size:11px;
+ font-weight:bold;
+ cursor:pointer;
+}
+
 #next{
- display:none;padding:14px 26px;
+ display:none;
  background:linear-gradient(90deg,#ffd34d,#fff0a4);
- border:0;border-radius:30px;
- font-weight:bold;font-size:17px;
- margin:10px;cursor:pointer;
+ color:#332400;
 }
+
 #restart{
- display:none;padding:12px 20px;
- border:1px solid gold;border-radius:20px;
- color:white;background:#ffffff15;
- margin:10px;
+ background:#ffffff17;
+ border:1px solid #d7bd79;
+ color:white;
 }
+
+#reward{
+ display:none;
+ max-width:650px;
+ margin:8px auto;
+ padding:10px;
+ border:1px solid #f4d47d;
+ background:#ffffff12;
+ border-radius:12px;
+ color:#ffe37b;
+ font-weight:bold;
+ font-size:15px;
+ line-height:1.4;
+}
+
+#rewardIcon{
+ font-size:40px;
+ display:block;
+ margin:3px;
+ filter:drop-shadow(0 0 10px gold);
+}
+
+#rewardText{font-size:13px}
+
+#finalText{
+ font-size:clamp(17px,5vw,26px);
+ line-height:1.5;
+ color:#ffdf79;
+}
+
 .coin{
- position:fixed;top:-40px;
- font-size:27px;z-index:10;
+ position:fixed;
+ top:-40px;
+ font-size:25px;
+ z-index:10;
  pointer-events:none;
  animation:rain var(--duration) linear forwards;
 }
-@keyframes rain{
- to{transform:translate(var(--side),110vh) rotate(900deg);opacity:.2}
-}
+
 .spark{
- position:fixed;top:45%;left:50%;
- font-size:35px;z-index:8;
+ position:fixed;
+ top:45%;
+ left:50%;
+ font-size:30px;
+ z-index:8;
  pointer-events:none;
  animation:burst 2s ease-out forwards;
 }
-@keyframes burst{
- to{transform:translate(var(--x),var(--y)) rotate(700deg) scale(1.5);opacity:0}
+
+@keyframes rain{
+ to{
+  transform:translate(var(--side),110vh) rotate(900deg);
+  opacity:.2;
+ }
 }
+
+@keyframes burst{
+ to{
+  transform:translate(var(--x),var(--y)) rotate(700deg) scale(1.5);
+  opacity:0;
+ }
+}
+
 @keyframes shake{
  0%,100%{transform:translateX(0)}
- 25%{transform:translateX(-18px)}
- 50%{transform:translateX(18px)}
- 75%{transform:translateX(-12px)}
+ 25%{transform:translateX(-15px)}
+ 50%{transform:translateX(15px)}
+ 75%{transform:translateX(-10px)}
 }
+
 @keyframes glow{
- 50%{filter:drop-shadow(0 0 35px gold) brightness(1.7)}
+ 50%{filter:drop-shadow(0 0 30px gold) brightness(1.7)}
 }
-#mic{
- font-size:12px;color:#a8d9ff;margin:8px;
+
+@media(max-width:360px){
+ body{padding:5px}
+ .layout{gap:5px}
+ .panel{padding:7px 4px}
+ #chest{height:85px;font-size:65px}
+ .item{font-size:9px}
+ .item span{font-size:21px}
 }
-button:disabled{opacity:.5}
 </style>
 </head>
+
 <body>
 
 <header>
@@ -103,33 +255,45 @@ button:disabled{opacity:.5}
  <div class="sub">LIMA PETI • LIMA GANJARAN • SATU PENGEMBARAAN</div>
 </header>
 
-<div class="panel">
- <div id="stage">PERINGKAT 1 / 5</div>
- <p id="description">Peti kayu purba</p>
- <div id="chest">🪵</div>
- <div id="goal">BISMILLAHIRRAHMANIRRAHIM</div>
- <div id="counter">0 / 3</div>
- <div id="status">Tekan dan tahan peti sambil menyebut zikir.</div>
- <div id="mic">🎤 Mikrofon belum diaktifkan</div>
-</div>
+<div class="layout">
 
-<div class="panel">
- <b>🎒 KOLEKSI GANJARAN</b>
- <div id="inventory" style="margin-top:12px">
-  <div class="item"><span>🔒</span>Kunci perak</div>
-  <div class="item"><span>🔒</span>Kunci emas</div>
-  <div class="item"><span>🔒</span>Peta</div>
-  <div class="item"><span>🔒</span>Rantai</div>
+ <div class="panel">
+  <div id="stage">PERINGKAT 1 / 5</div>
+  <div id="description">Peti kayu purba</div>
+
+  <button id="chest">🪵</button>
+
+  <div id="goal">BISMILLAHIRRAHMANIRRAHIM 3 KALI</div>
+  <div id="counter">0 / 3</div>
+  <div id="status">Tekan dan tahan peti sambil menyebut zikir.</div>
+  <div id="mic">🎤 Mikrofon sedia</div>
  </div>
+
+ <div class="panel">
+  <div class="inventory-title">🎒 KOLEKSI GANJARAN</div>
+  <div id="inventory"></div>
+ </div>
+
 </div>
 
-<div id="reward"></div>
-<button id="next">BUKA PERINGKAT SETERUSNYA ➜</button>
-<button id="restart" onclick="location.reload()">MAIN SEMULA 🔄</button>
+<div id="reward">
+ <span id="rewardIcon"></span>
+ <div id="rewardText"></div>
+</div>
+
+<div class="actions">
+ <button class="action" id="restart" onclick="location.reload()">
+  🔄 MULA SEMULA
+ </button>
+ <button class="action" id="next">
+  PETI SETERUSNYA ➜
+ </button>
+</div>
 
 <script>
-const Speech = window.SpeechRecognition ||
-               window.webkitSpeechRecognition;
+const Speech =
+ window.SpeechRecognition ||
+ window.webkitSpeechRecognition;
 
 const chest=document.getElementById("chest");
 const stageText=document.getElementById("stage");
@@ -139,19 +303,21 @@ const counter=document.getElementById("counter");
 const statusBox=document.getElementById("status");
 const mic=document.getElementById("mic");
 const rewardBox=document.getElementById("reward");
-const nextButton=document.getElementById("next");
+const rewardIcon=document.getElementById("rewardIcon");
+const rewardText=document.getElementById("rewardText");
 const inventory=document.getElementById("inventory");
+const nextButton=document.getElementById("next");
 
 let stage=0;
 let holding=false;
 let finished=false;
 let active=false;
 let recognition=null;
-let resultSlots={};
 let counts={};
-let rewardReady=false;
+let processed=new Set();
 
 const stages=[
+
  {
   name:"Peti kayu purba",
   icon:"🪵",
@@ -160,18 +326,22 @@ const stages=[
   goal:"BISMILLAHIRRAHMANIRRAHIM 3 KALI",
   reward:"🔑",
   rewardName:"KUNCI PERAK BERSINAR",
-  audio:"Tahniah! Anda mendapat kunci perak yang bersinar."
+  rewardAudio:"Tahniah! Anda mendapat kunci perak yang bersinar.",
+  eligible:"Tahniah! Kamu layak membuka peti ke dua."
  },
+
  {
   name:"Peti kayu moden",
-  icon:"🗝️",
+  icon:"🪵",
   phrases:["subhanallah"],
   required:[3],
   goal:"SUBHANALLAH 3 KALI",
   reward:"🗝️",
   rewardName:"KUNCI EMAS BERSINAR",
-  audio:"Hebat! Anda mendapat kunci emas yang bersinar."
+  rewardAudio:"Hebat! Anda mendapat kunci emas yang bersinar.",
+  eligible:"Tahniah! Kamu layak membuka peti ke tiga."
  },
+
  {
   name:"Peti besi buruk",
   icon:"🧰",
@@ -180,8 +350,10 @@ const stages=[
   goal:"ALLAHU AKBAR 3 KALI",
   reward:"🗺️",
   rewardName:"PETA HARTA KARUN EMAS",
-  audio:"Syabas! Kunci emas telah membuka peti besi. Anda menemui peta harta karun yang bersinar."
+  rewardAudio:"Kunci emas berjaya membuka peti besi. Anda mendapat peta harta karun emas yang bersinar.",
+  eligible:"Tahniah! Kamu layak membuka peti ke empat."
  },
+
  {
   name:"Peti besi perak",
   icon:"🛡️",
@@ -190,8 +362,10 @@ const stages=[
   goal:"SUBHANALLAH 1X • ALLAHU AKBAR 1X • ALHAMDULILLAH 1X",
   reward:"💎",
   rewardName:"RANTAI BERLIAN WARNA-WARNI",
-  audio:"Tahniah! Anda mendapat rantai berlian warna-warni yang sangat indah."
+  rewardAudio:"Tahniah! Anda mendapat rantai berlian warna-warni yang bersinar.",
+  eligible:"Tahniah! Kamu layak membuka peti ke lima."
  },
+
  {
   name:"Peti besi emas",
   icon:"👑",
@@ -200,7 +374,7 @@ const stages=[
   goal:"ALHAMDULILLAH 3 KALI",
   reward:"🪙",
   rewardName:"HUJAN SYILING EMAS",
-  audio:"Tahniah! Anda berjaya akhiri permainan ini. Tapi, sebanyak mana pun harta yang kamu miliki di dunia, akhirat itu lebih hebat dan lebih berharga."
+  rewardAudio:"Tahniah, anda berjaya akhiri permainan ini. Tapi, sebanyak mana pun harta yang kamu miliki di dunia, akhirat itu lebih hebat dan lebih berharga. Sekian, terima kasih."
  }
 ];
 
@@ -210,43 +384,46 @@ const aliases={
   "bismillahirrohmanirrohim",
   "bismillahirrahmanirrohim",
   "bismillahirrohmanirrahim",
-  "bismillahirrahman",
   "bismillah"
  ],
  subhanallah:[
   "subhanallah","subahanallah","subhan allah"
  ],
  allahuakbar:[
-  "allahuakbar","allahu akbar","allah akbar",
-  "allahuakabr","allahu akabr"
+  "allahuakbar","allahu akbar",
+  "allah akbar","allahuakabr","allahu akabr"
  ],
  alhamdulillah:[
-  "alhamdulillah","alhamdulilah","alhamdulillah"
+  "alhamdulillah","alhamdulilah"
  ]
 };
 
-function normalize(s){
- return s.toLowerCase()
+function normalize(text){
+ return text.toLowerCase()
  .normalize("NFD")
  .replace(/[\u0300-\u036f]/g,"")
  .replace(/[^a-z]/g,"");
 }
 
-function occurrences(text,phrase){
- let n=0,pos=0;
- while((pos=text.indexOf(phrase,pos))!==-1){
-  n++;pos+=phrase.length;
- }
- return n;
-}
-
-function findCount(text,key){
- let total=0;
+function countPhrase(text,key){
  const normalized=normalize(text);
+ let maximum=0;
+
  for(const alias of aliases[key]){
-  total=Math.max(total,occurrences(normalized,normalize(alias)));
+  const phrase=normalize(alias);
+  if(!phrase)continue;
+
+  let total=0;
+  let pos=0;
+
+  while((pos=normalized.indexOf(phrase,pos))!==-1){
+   total++;
+   pos+=phrase.length;
+  }
+
+  maximum=Math.max(maximum,total);
  }
- return total;
+ return maximum;
 }
 
 function speak(text,callback){
@@ -254,58 +431,88 @@ function speak(text,callback){
   if(callback)callback();
   return;
  }
+
  speechSynthesis.cancel();
 
- const msg=new SpeechSynthesisUtterance(text);
- msg.lang="ms-MY";
- msg.rate=.9;
- msg.pitch=1.05;
- msg.volume=1;
+ const message=new SpeechSynthesisUtterance(text);
+ message.lang="ms-MY";
+ message.rate=.9;
+ message.pitch=1.05;
+ message.volume=1;
 
  const voices=speechSynthesis.getVoices();
- const voice=voices.find(v=>v.lang.toLowerCase().startsWith("ms"));
- if(voice)msg.voice=voice;
+ const malay=voices.find(v=>
+  v.lang.toLowerCase().startsWith("ms")
+ );
 
- msg.onend=()=>{if(callback)callback()};
- msg.onerror=()=>{if(callback)callback()};
+ if(malay)message.voice=malay;
 
- speechSynthesis.speak(msg);
+ message.onend=()=>{if(callback)callback()};
+ message.onerror=()=>{if(callback)callback()};
+
+ speechSynthesis.speak(message);
+}
+
+function renderInventory(){
+ const items=[
+  {icon:"🔑",name:"Kunci perak",filter:"grayscale(1) brightness(1.7)"},
+  {icon:"🗝️",name:"Kunci emas",filter:"sepia(1) saturate(2)"},
+  {icon:"🗺️",name:"Peta harta",filter:"none"},
+  {icon:"💎",name:"Rantai berlian",filter:"none"}
+ ];
+
+ inventory.innerHTML=items.map((item,i)=>{
+  const unlocked=i<stage;
+  return `
+   <div class="item ${unlocked?"":"locked"}">
+    <span style="filter:${item.filter}">${unlocked?item.icon:"🔒"}</span>
+    ${item.name}
+   </div>
+  `;
+ }).join("");
 }
 
 function render(){
  const s=stages[stage];
+
  stageText.innerText="PERINGKAT "+(stage+1)+" / 5";
  description.innerText=s.name;
  chest.innerText=s.icon;
  chest.style.display="block";
  chest.style.animation="";
  goal.innerText=s.goal;
- counter.innerText=s.required.length===1
-  ? "0 / "+s.required[0]
-  : s.required.map((v,i)=>"0 / "+v).join("   ");
+
+ counts={};
+ processed=new Set();
+
+ updateCounter();
+
  statusBox.innerText="Tekan dan tahan peti sambil sebut zikir.";
- mic.innerText="🎤 Sedia mengesan suara";
+ mic.innerText="🎤 Mikrofon sedia";
+
  rewardBox.style.display="none";
  nextButton.style.display="none";
- rewardReady=false;
+
  finished=false;
- counts={};
- resultSlots={};
+ holding=false;
+
+ renderInventory();
 }
 
 function updateCounter(){
  const s=stages[stage];
- const display=s.phrases.map((p,i)=>
+
+ counter.innerText=s.phrases.map((p,i)=>
   (counts[p]||0)+" / "+s.required[i]
- );
- counter.innerText=display.join("     ");
+ ).join("   ");
 }
 
 function beginVoice(){
  if(!Speech){
-  mic.innerText="Browser tidak menyokong pengecaman suara. Cuba Chrome.";
+  mic.innerText="Browser tidak menyokong suara. Cuba Chrome.";
   return;
  }
+
  if(active||finished)return;
 
  recognition=new Speech();
@@ -323,35 +530,30 @@ function beginVoice(){
   if(!holding||finished)return;
 
   for(let i=event.resultIndex;i<event.results.length;i++){
-   const text=event.results[i][0].transcript;
 
+   const result=event.results[i];
+
+   if(!result.isFinal)continue;
+
+   const resultId=stage+"-"+i;
+
+   if(processed.has(resultId))continue;
+   processed.add(resultId);
+
+   const transcript=result[0].transcript;
    const s=stages[stage];
-   const slot=i;
-   const current={};
 
    s.phrases.forEach((phrase,index)=>{
-    current[phrase]=Math.min(
-     s.required[index],
-     findCount(text,phrase)
-    );
-   });
+    const found=countPhrase(transcript,phrase);
 
-   const previous=resultSlots[slot]||{};
-
-   // Interim dan final tidak dikira dua kali
-   s.phrases.forEach((phrase,index)=>{
-    const old=previous[phrase]||0;
-    const now=current[phrase]||0;
-
-    if(now>old){
+    if(found>0){
      counts[phrase]=Math.min(
       s.required[index],
-      (counts[phrase]||0)+(now-old)
+      (counts[phrase]||0)+found
      );
     }
    });
 
-   resultSlots[slot]=current;
    updateCounter();
 
    const done=s.phrases.every((p,i)=>
@@ -359,7 +561,7 @@ function beginVoice(){
    );
 
    statusBox.innerText=done
-    ?"Hebat! Syarat dipenuhi!"
+    ?"Alhamdulillah! Misi berjaya!"
     :"🎤 Suara dikesan! Teruskan...";
 
    if(done){
@@ -377,26 +579,40 @@ function beginVoice(){
 
  recognition.onend=()=>{
   active=false;
+
   if(holding&&!finished){
    try{recognition.start()}catch(e){}
   }
  };
 
- try{recognition.start()}
- catch(e){mic.innerText="Tekan semula untuk cuba."}
+ try{
+  recognition.start();
+ }catch(e){
+  mic.innerText="Tekan semula untuk cuba.";
+ }
 }
 
 chest.addEventListener("pointerdown",e=>{
  e.preventDefault();
- if(finished||rewardReady)return;
+
+ if(finished)return;
+
  holding=true;
  chest.setPointerCapture(e.pointerId);
+
  beginVoice();
 });
 
 function release(){
+ if(!holding)return;
+
  holding=false;
- if(!finished&&!rewardReady){
+
+ if(recognition){
+  try{recognition.stop()}catch(e){}
+ }
+
+ if(!finished){
   statusBox.innerText="Jari dilepaskan. Sambung tekan dan tahan.";
  }
 }
@@ -404,13 +620,18 @@ function release(){
 chest.addEventListener("pointerup",release);
 chest.addEventListener("pointercancel",release);
 
-function burst(symbol,number=65){
+function burst(symbol,number=60){
  for(let i=0;i<number;i++){
   const el=document.createElement("div");
   el.className="spark";
   el.innerText=symbol;
-  el.style.setProperty("--x",(Math.random()-.5)*900+"px");
-  el.style.setProperty("--y",(Math.random()-.5)*850+"px");
+
+  el.style.setProperty("--x",
+   (Math.random()-.5)*800+"px");
+
+  el.style.setProperty("--y",
+   (Math.random()-.5)*750+"px");
+
   document.body.appendChild(el);
   setTimeout(()=>el.remove(),2100);
  }
@@ -422,86 +643,86 @@ function rainCoins(){
    const el=document.createElement("div");
    el.className="coin";
    el.innerText=Math.random()>.5?"🪙":"💰";
+
    el.style.left=Math.random()*100+"vw";
-   el.style.setProperty("--side",(Math.random()-.5)*160+"px");
-   el.style.setProperty("--duration",(2+Math.random()*3)+"s");
+   el.style.setProperty("--side",
+    (Math.random()-.5)*150+"px");
+
+   el.style.setProperty("--duration",
+    (2+Math.random()*3)+"s");
+
    document.body.appendChild(el);
    setTimeout(()=>el.remove(),5500);
   },i*35);
  }
 }
 
-function updateInventory(){
- const items=[
-  ["🔑","Kunci perak"],
-  ["🗝️","Kunci emas"],
-  ["🗺️","Peta harta"],
-  ["💎","Rantai berlian"]
- ];
- inventory.innerHTML=items.map((item,i)=>
-  `<div class="item"><span>${i<stage?item[0]:"🔒"}</span>${item[1]}</div>`
- ).join("");
-}
-
 function completeStage(){
  if(finished)return;
+
  finished=true;
  holding=false;
- rewardReady=true;
 
  if(recognition){
   recognition.onend=null;
-  recognition.stop();
+  try{recognition.stop()}catch(e){}
  }
+
  active=false;
+
+ const s=stages[stage];
 
  chest.style.animation="shake .5s";
  chest.innerText="💥";
- statusBox.innerText="PETI TERBUKA! GANJARAN DITEMUI!";
 
- const s=stages[stage];
+ statusBox.innerText="PETI BERJAYA DIBUKA!";
 
  setTimeout(()=>{
   chest.style.animation="glow 1.2s infinite";
   chest.innerText=s.reward;
-  burst(stage===4?"🪙":s.reward,stage===4?100:60);
+
+  burst(stage===4?"🪙":s.reward,
+   stage===4?100:60);
 
   rewardBox.style.display="block";
-  rewardBox.innerHTML=`
-   <div style="font-size:52px">${s.reward}</div>
-   <div>${s.rewardName}</div>
-  `;
+  rewardIcon.innerText=s.reward;
+  rewardText.innerText=s.rewardName;
 
   if(stage===4){
    rainCoins();
-   document.getElementById("restart").style.display="inline-block";
+
+   nextButton.style.display="none";
    statusBox.innerText="ANDA TELAH MENAMATKAN PERMAINAN!";
-   speak(
-    "Tahniah, anda berjaya akhiri permainan ini. Tapi, sebanyak mana pun harta yang kamu miliki di dunia, akhirat itu lebih hebat dan lebih berharga."
-   );
+
+   speak(s.rewardAudio);
+
   }else{
-   updateInventory();
-   nextButton.style.display="inline-block";
-   statusBox.innerText="Ganjaran berjaya diperoleh!";
-   speak(s.audio);
+   nextButton.style.display="block";
+
+   statusBox.innerText=
+    "MISI SELESAI! GANJARAN BERJAYA DIPEROLEH.";
+
+   speak(
+    s.rewardAudio+" "+s.eligible
+   );
   }
- },900);
+
+ },800);
 }
 
 nextButton.addEventListener("click",()=>{
- if(!rewardReady||stage>=4)return;
+ if(!finished||stage>=4)return;
 
  stage++;
  render();
- updateInventory();
 });
 
 render();
-updateInventory();
 
 if("speechSynthesis" in window){
  speechSynthesis.getVoices();
 }
 </script>
+
 </body>
 </html>
