@@ -26,7 +26,6 @@ h1{
  user-select:none;-webkit-user-select:none;
  filter:drop-shadow(0 0 15px gold);
 }
-#chest:active{transform:scale(.9)}
 #count{font-size:38px;color:#00ffae;font-weight:bold}
 #status{font-size:18px;min-height:50px;padding:12px}
 #result{
@@ -61,6 +60,7 @@ h1{
  display:none;background:gold;color:#171000;
  border:0;border-radius:30px;padding:15px 30px;
  font-size:18px;font-weight:bold;margin:15px;
+ cursor:pointer;
 }
 </style>
 </head>
@@ -101,6 +101,7 @@ let count=0;
 let recognition=null;
 let lastInterim="";
 
+// SUARA PEMBUKAAN
 function startVoice(){
 
  if(!Speech){
@@ -129,7 +130,6 @@ function startVoice(){
    const transcript=event.results[i][0].transcript
     .toLowerCase().trim();
 
-   // Keputusan interim untuk respons lebih pantas
    if(!event.results[i].isFinal){
     if(transcript!==lastInterim){
      lastInterim=transcript;
@@ -140,7 +140,6 @@ function startVoice(){
 
    lastInterim="";
 
-   // Kira hanya keputusan akhir
    const matches=transcript.match(/subhanallah/g);
 
    if(matches){
@@ -148,14 +147,9 @@ function startVoice(){
     counter.innerText=count+" / 3";
 
     statusBox.innerText=
-     count===1?"Alhamdulillah! Kali pertama!":
-     count===2?"Bagus! Kali kedua!":
-     "CUKUP 3 KALI!";
-
-    chest.style.transform="scale(1.15)";
-    setTimeout(()=>{
-     if(!finished)chest.style.transform="scale(1)";
-    },150);
+     count===1?"Bagus! Kali pertama!":
+     count===2?"Teruskan! Kali kedua!":
+     "ALHAMDULILLAH! CUKUP 3 KALI!";
 
     if(count>=3){
      win();
@@ -186,6 +180,7 @@ function startVoice(){
  }
 }
 
+// TEKAN DAN TAHAN PETI
 chest.addEventListener("pointerdown",(e)=>{
  e.preventDefault();
  if(finished)return;
@@ -207,6 +202,7 @@ function release(){
 chest.addEventListener("pointerup",release);
 chest.addEventListener("pointercancel",release);
 
+// PETI PECAH
 function win(){
 
  if(finished)return;
@@ -223,10 +219,9 @@ function win(){
  chest.style.animation="shake .5s";
 
  statusBox.innerText="PETI PECAH!!!";
-
  document.getElementById("instruction").style.display="none";
 
- // Duit RM1 juta meletup keluar
+ // LETUPAN DUIT
  for(let i=0;i<180;i++){
   const money=document.createElement("div");
   money.className="money";
@@ -242,12 +237,13 @@ function win(){
   setTimeout(()=>money.remove(),3000);
  }
 
- // Paparan ending
+ // ENDING BERSUARA
  setTimeout(()=>{
   chest.style.display="none";
   counter.style.display="none";
 
   result.style.display="block";
+
   result.innerHTML=`
    <div style="font-size:38px">
     ALHAMDULILLAH!!
@@ -270,6 +266,31 @@ function win(){
 
   statusBox.innerText="";
   document.getElementById("reset").style.display="inline-block";
+
+  // BACA MESEJ DENGAN SUARA
+  if("speechSynthesis" in window){
+
+   speechSynthesis.cancel();
+
+   const msg=new SpeechSynthesisUtterance(
+    "Alhamdulillah! Syabas! Tiga kali Subhanallah lebih bernilai dari satu juta ringgit!"
+   );
+
+   msg.lang="ms-MY";
+   msg.rate=0.85;
+   msg.pitch=1.1;
+   msg.volume=1;
+
+   const voices=speechSynthesis.getVoices();
+
+   const malayVoice=voices.find(v=>
+    v.lang.toLowerCase().startsWith("ms")
+   );
+
+   if(malayVoice)msg.voice=malayVoice;
+
+   speechSynthesis.speak(msg);
+  }
 
  },3000);
 }
